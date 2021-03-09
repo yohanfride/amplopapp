@@ -94,4 +94,31 @@ class rekaplingkungan_m extends My_Model{
         $q->free_result();
         return $data;
 	}
+
+	function total_rekap_lingkungan($wil=""){
+		$sql = "SELECT a.*, IFNULL(b.total, 0) AS total FROM lingkungan a left join 
+				(SELECT kode_lingkungan, sum(total) as total FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan ";
+		if(!empty($wil)){
+			$sql.=" WHERE (kode_wilayah = '$wil' OR wilayah LIKE '%$wil%') ";
+		}		
+		$sql.= "ORDER BY kode_lingkungan ASC";
+		$q   = $this->db->query($sql);
+		$data = $q->result();
+        $q->free_result();
+        return $data;
+	}
+
+	function jumlah_rekap_lingkungan($wil=""){
+		$sql = "SELECT a.*, (SELECT COUNT(kk_id) * 7 FROM amplop_umat c WHERE c.kode_lingkungan = a.kode_lingkungan ) as jumlah_amplop,
+				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung FROM lingkungan a left join 
+				( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan ";
+		if(!empty($wil)){
+			$sql.=" WHERE (kode_wilayah = '$wil' OR wilayah LIKE '%$wil%') ";
+		}		
+		$sql.= "ORDER BY kode_lingkungan ASC";
+		$q   = $this->db->query($sql);
+		$data = $q->result();
+        $q->free_result();
+        return $data;
+	}
 }

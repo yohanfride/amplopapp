@@ -93,7 +93,10 @@
               </li>
               <li <?php if($menu == 'grafik-jumlah'){ echo 'class="active"'; } ?>>
                 <a href="<?= base_url()?>grafik/jumlah"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Rekapitulasi Jumlah Amplop</span></a>
-              </li>
+              </li><!-- 
+              <li <?php if($menu == 'grafik-harian'){ echo 'class="active"'; } ?>>
+                <a href="<?= base_url()?>grafik/harian"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Rekapitulasi Perhitungan Harian Amplop</span></a>
+              </li> -->
               <?php if($user_now->role == 'master'){ ?>
               <li class="menu-header">Data Master</li>
               <li <?php if($menu == 'umat'){ echo 'class="active"'; } ?> >
