@@ -121,4 +121,21 @@ class rekaplingkungan_m extends My_Model{
         $q->free_result();
         return $data;
 	}
+
+	function total_rekap_lingkungan_excel($wil=""){
+		$sql = "SELECT a.*, IFNULL(b.total, 0) AS total, IFNULL(b.amplop1, 0) AS amplop1, IFNULL(b.amplop2, 0) AS amplop2, IFNULL(b.amplop3, 0) AS amplop3, 
+				IFNULL(b.amplop4, 0) AS amplop4, IFNULL(b.amplop5, 0) AS amplop5, IFNULL(b.amplop6, 0) AS amplop6, IFNULL(b.amplop7, 0) AS amplop7 
+				FROM lingkungan a left join (SELECT kode_lingkungan, sum(total) as total, sum(amplop1) as amplop1, sum(amplop2) as amplop2, 
+				sum(amplop3) as amplop3, sum(amplop4) as amplop4, sum(amplop5) as amplop5, sum(amplop6) as amplop6, sum(amplop7) as amplop7 
+				FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan ";
+		if(!empty($wil)){
+			$sql.=" WHERE (kode_wilayah = '$wil' OR wilayah LIKE '%$wil%') ";
+		}		
+		$sql.= "ORDER BY kode_lingkungan ASC";
+		$q   = $this->db->query($sql);
+		$data = $q->result();
+        $q->free_result();
+        return $data;
+	}
+
 }

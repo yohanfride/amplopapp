@@ -57,10 +57,16 @@
                 <div class="card-body">
                     <div class="d-lg-flex align-items-center">
                         <h3 class="card-title">Grafik Rekapitulasi Jumlah Amplop</h3>
-                        <a target="_blank" href="<?= base_url()?>/grafik/jumlah/cetak/?<?= $params; ?>" class="ml-auto"><button class="btn btn-danger btn-round ml-auto">
+                        <div class="ml-auto">
+                          <a target="_blank" href="<?= base_url()?>/grafik/jumlah/cetak/?<?= $params; ?>" class="ml-auto"><button class="btn  btn-lg btn-danger btn-round ml-auto">
                             <i class="fa fa-file-pdf"></i>
                             Cetak PDF
-                        </button></a>
+                          </button></a>
+                          <a target="_blank" href="<?= base_url()?>/excel/jumlah/<?= $params; ?>" ><button class="btn btn-lg btn-success btn-round ml-auto">
+                            <i class="fa fa-file-excel"></i>
+                            Export Excel
+                          </button></a>
+                        </div>
                     </div>
                     <!-- <div class="mb-2 mt-2">
                         <canvas id="myChart"></canvas>

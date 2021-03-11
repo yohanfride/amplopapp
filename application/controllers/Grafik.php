@@ -14,7 +14,7 @@ class grafik extends CI_Controller {
 
     }
 
-    function round($var,$max = 100000) {
+    function round($var,$max = 1000000) {
 	    return ceil( ($var + 9) / $max ) * $max;
 	}
 
@@ -110,7 +110,7 @@ class grafik extends CI_Controller {
 
 			$n++;
 		} 
-		$data['max'] = $this->round($max,50); 
+		$data['max'] = $this->round($max,100); 
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";

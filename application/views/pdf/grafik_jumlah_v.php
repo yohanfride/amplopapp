@@ -138,6 +138,6 @@
         setTimeout(function(){ 
           window.print(); 
           setTimeout(window.close, 0);
-        },500);
+        },1000);
     } );
 </script>
