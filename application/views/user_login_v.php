@@ -52,7 +52,12 @@
                 <div class="d-block">
                   <label for="password" class="control-label">Password</label>
                 </div>
-                <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                <div class="input-group mb-2">
+                  <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                  <div class="input-group-append">
+                    <div class="input-group-text" style="cursor: pointer;" onclick="showpassword('password');"><i id="btn-eye-password" class="fa fa-eye"></i></div>
+                  </div>
+                </div>
                 <div class="invalid-feedback">
                   Masukkan password anda yang telah terdaftar
                 </div>
@@ -115,6 +120,16 @@
 
   <!-- Page Specific JS File -->
   <!-- <script src="<?= base_url()?>assets/js/page/forms-advanced-forms.js"></script> -->
-  
+  <script type="text/javascript">
+    function showpassword(index){
+      if($("#"+index).prop("type") == "text"){
+        $("#"+index).prop("type", "password");
+        $("#btn-eye-"+index).removeClass("text-primary");
+      } else {
+        $("#"+index).prop("type", "text");
+        $("#btn-eye-"+index).addClass("text-primary");
+      }
+    }
+  </script>
 </body>
 </html>

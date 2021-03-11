@@ -88,10 +88,9 @@
 <?php include("footer.php") ?>
 <script src="<?= base_url()?>assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- JS Libraies -->
-<script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="<?= base_url()?>assets/node_modules/chart.js/dist/Chart.min.js"></script>
 
 <script type="text/javascript">
-    
     function chartjs_init(id, labels,data){
         var ctx = document.getElementById(id).getContext('2d');
         var myChart = new Chart(ctx, {

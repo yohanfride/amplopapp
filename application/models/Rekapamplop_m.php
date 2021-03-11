@@ -79,4 +79,16 @@ class rekapamplop_m extends My_Model{
         $q->free_result();
         return $data;
 	}
+
+	function rekap_per_tanggal($lim=''){
+		$sql = "SELECT a.date_add,SUM(total) as total FROM rekap_amplop a 
+				WHERE status_simpan = 1 GROUP BY a.date_add ORDER BY a.date_add DESC";
+		$q   = $this->db->query($sql);
+		if(!empty($lim)){
+			$sql.= " LIMIT 0, $lim";
+		}
+		$data = $q->result();
+        $q->free_result();
+        return $data;
+	}
 }

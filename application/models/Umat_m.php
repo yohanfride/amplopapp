@@ -170,4 +170,15 @@ class umat_m extends My_Model{
         $q->free_result();
         return $data;
 	}
+
+	function jumlah_rekap_terhitung(){
+		$sql = " SELECT SUM(amplop1 + amplop2 + amplop3 + amplop4 + amplop5 + amplop6 + amplop7) AS jumlah_amplop FROM 
+					( SELECT kode_lingkungan, timestamp1, IF(status_amplop1 = 7,1,0) AS amplop1, IF(status_amplop2 = 7,1,0) AS amplop2,
+					IF(status_amplop3 = 7,1,0) AS amplop3, IF(status_amplop4 = 7,1,0) AS amplop4,  IF(status_amplop5 = 7,1,0) AS amplop5,
+					IF(status_amplop6 = 7,1,0) AS amplop6, IF(status_amplop7 = 7,1,0) AS amplop7 FROM amplop_umat ) a ";
+		$q   = $this->db->query($sql);
+		$data = $q->row();
+        $q->free_result();
+        return $data;
+	}
 }

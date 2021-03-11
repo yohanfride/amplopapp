@@ -127,8 +127,8 @@ $(function() {
   }
   sidebar_dropdown();
 
-  if($("#top-5-scroll").length) {
-    $("#top-5-scroll").css({
+  if($(".top-5-scroll").length) {
+    $(".top-5-scroll").css({
       height: 315
     }).niceScroll();
   }
