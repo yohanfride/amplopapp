@@ -505,4 +505,44 @@ class excel extends CI_Controller {
 		$this->rekap_jumlah_perhitungan($data['data']);
    	}
 
+   	function import(){
+   		$tmpfname = "LIST KK DATA AMPLOP FIX.xlsx";
+   		$tmpfname = "assets/upload/import/".$tmpfname;
+   		$excelReader = PHPExcel_IOFactory::createReaderForFile($tmpfname);
+		$excelObj = $excelReader->load($tmpfname);
+		$sheetCount = $excelObj->getSheetCount();
+		for($i=0; $i<$sheetCount; $i++){
+			$worksheet = $excelObj->getSheet($i);
+			$lingkungan =  $worksheet->getCell('A3')->getValue();
+			$lingkungan = str_replace("Lingkungan : ", '', $lingkungan);
+			$dataling = $this->lingkungan_m->get_detail_bynama($lingkungan);
+			if($dataling){
+				echo "Inser Data $lingkungan";
+				$row=5;
+				$status = true;
+				$berhasil=0;$gagal=0;
+				while($status){
+					$no = $worksheet->getCell('A'.$row)->getValue();
+					if(empty($no))
+						break;
+					$kk_id = $worksheet->getCell('D'.$row)->getValue();
+					$nama = $worksheet->getCell('E'.$row)->getValue();
+					$input=array(
+						'kk_id' => $kk_id,			
+						'nama' => strtoupper($nama),			
+						'kode_lingkungan' => $dataling->kode_lingkungan			
+					);
+					$insert=$this->umat_m->insert('amplop_umat',$input);
+					if($this->db->affected_rows()){            
+		                $berhasil++;
+		            } else {                
+		                $gagal++;
+		            }
+					$row++;
+				}
+				echo " -> Berhasil: ".$berhasil." - Gagal: ".$gagal;
+				echo "<br/>";
+			}	
+		}
+   	}
 }

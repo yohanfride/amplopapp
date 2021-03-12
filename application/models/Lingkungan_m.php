@@ -51,6 +51,13 @@ class lingkungan_m extends My_Model{
 		return $r;
 	}
 	
+	function get_detail_bynama($ling){		
+		$sql = "SELECT * FROM lingkungan WHERE lingkungan = '$ling' ";
+		$res = $this->db->query($sql);
+		$r=$res->row();
+		$res->free_result();
+		return $r;
+	}
 }
 
 /* End of file admin_model.php */
