@@ -105,12 +105,10 @@ class pengembalian extends CI_Controller {
 		if($lastparams->menu == 'kembali'){
 			$params = '&'.$lastparams->params;
 		}
-		if(!$this->kembaliamplop_m->cek_hapus($id)){
-			$del=$this->kembaliamplop_m->delete('pengembalian_lingkungan','idpengembalian_lingkungan',$id);
-			if($del){
-				redirect(base_url().'pengembalian/?alert=success'.$params) ; 			
-			} 
-		}
+		$del=$this->kembaliamplop_m->delete('pengembalian_amplop','idpengembalian_amplop',$id);
+		if($del){
+			redirect(base_url().'pengembalian/?alert=success'.$params) ; 			
+		} 
 		redirect(base_url().'pengembalian/?alert=failed'.$params) ; 			
 	}
     

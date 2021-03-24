@@ -88,7 +88,7 @@
                 <a href="<?= base_url()?>rekap"  class="nav-link"><i class="fas fa-envelope"></i><span>Rekap Amplop Coklat</span></a>
               </li>
               <li <?php if($menu == 'kembali'){ echo 'class="active"'; } ?>>
-                <a href="<?= base_url()?>penerimaan"  class="nav-link"><i class="fas fa-sign-in-alt"></i><span>Penerimaan Amplop</span></a>
+                <a href="<?= base_url()?>pengembalian"  class="nav-link"><i class="fas fa-sign-in-alt"></i><span>Penerimaan Amplop</span></a>
               </li>
               <li class="menu-header">Grafik</li>
               <li <?php if($menu == 'grafik-perhitungan'){ echo 'class="active"'; } ?>>
