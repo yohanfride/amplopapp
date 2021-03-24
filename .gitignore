@@ -7,6 +7,7 @@
 #
 application/config/
 assets/upload/
+phpmyadmin/
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 # Learn more about Git LFS for large files:
