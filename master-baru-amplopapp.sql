@@ -2617,7 +2617,7 @@ INSERT INTO `lingkungan` (`kode_lingkungan`, `kode_wilayah`, `wilayah`, `lingkun
 
 -- Dumping structure for table amplopapp.pengembalian_amplop
 CREATE TABLE IF NOT EXISTS `pengembalian_amplop` (
-  `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT,
+  `idpengembalian_amplop` int(11) NOT NULL AUTO_INCREMENT,
   `kode_lingkungan` char(50) NOT NULL DEFAULT '0',
   `user_id` char(50) DEFAULT NULL,
   `tanggal_pengembalian` date DEFAULT NULL,
@@ -2625,7 +2625,7 @@ CREATE TABLE IF NOT EXISTS `pengembalian_amplop` (
   `jumlah_amplop` int(11) DEFAULT NULL,
   `penerima` varchar(255) DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_pengembalian`),
+  PRIMARY KEY (`idpengembalian_amplop`),
   KEY `FK_pengembalian_amplop_lingkungan` (`kode_lingkungan`),
   CONSTRAINT `FK_pengembalian_amplop_lingkungan` FOREIGN KEY (`kode_lingkungan`) REFERENCES `lingkungan` (`kode_lingkungan`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

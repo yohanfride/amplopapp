@@ -2635,7 +2635,7 @@ INSERT INTO `lingkungan` (`kode_lingkungan`, `kode_wilayah`, `wilayah`, `lingkun
 --
 
 CREATE TABLE `pengembalian_amplop` (
-  `id_pengembalian` int(11) NOT NULL,
+  `idpengembalian_amplop` int(11) NOT NULL,
   `kode_lingkungan` char(50) NOT NULL DEFAULT '0',
   `user_id` char(50) DEFAULT NULL,
   `tanggal_pengembalian` date DEFAULT NULL,
@@ -2787,7 +2787,7 @@ ALTER TABLE `lingkungan`
 -- Indeks untuk tabel `pengembalian_amplop`
 --
 ALTER TABLE `pengembalian_amplop`
-  ADD PRIMARY KEY (`id_pengembalian`),
+  ADD PRIMARY KEY (`idpengembalian_amplop`),
   ADD KEY `FK_pengembalian_amplop_lingkungan` (`kode_lingkungan`);
 
 --
@@ -2828,7 +2828,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `pengembalian_amplop`
 --
 ALTER TABLE `pengembalian_amplop`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idpengembalian_amplop` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `rekap_amplop`
