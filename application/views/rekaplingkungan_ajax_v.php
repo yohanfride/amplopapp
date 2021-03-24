@@ -85,7 +85,6 @@
                                             <span class="custom-switch-description">Draft Data</span>
                                         </label> 
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div class="form-actions frm-input-hide">

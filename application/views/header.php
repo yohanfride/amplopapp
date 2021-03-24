@@ -87,13 +87,21 @@
               <li <?php if($menu == 'rekap'){ echo 'class="active"'; } ?>>
                 <a href="<?= base_url()?>rekap"  class="nav-link"><i class="fas fa-envelope"></i><span>Rekap Amplop Coklat</span></a>
               </li>
+              <li <?php if($menu == 'kembali'){ echo 'class="active"'; } ?>>
+                <a href="<?= base_url()?>penerimaan"  class="nav-link"><i class="fas fa-sign-in-alt"></i><span>Penerimaan Amplop</span></a>
+              </li>
               <li class="menu-header">Grafik</li>
               <li <?php if($menu == 'grafik-perhitungan'){ echo 'class="active"'; } ?>>
-                <a href="<?= base_url()?>grafik/perhitungan"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Rekapitulasi Perhitungan Amplop</span></a>
+                <a href="<?= base_url()?>grafik/perhitungan"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Perhitungan Amplop</span></a>
               </li>
               <li <?php if($menu == 'grafik-jumlah'){ echo 'class="active"'; } ?>>
-                <a href="<?= base_url()?>grafik/jumlah"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Rekapitulasi Jumlah Amplop</span></a>
-              </li><!-- 
+                <a href="<?= base_url()?>grafik/jumlah"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Perhitungan Jumlah Amplop</span></a>
+              </li>
+              <li <?php if($menu == 'grafik-kembali'){ echo 'class="active"'; } ?>>
+                <a href="<?= base_url()?>grafik/pengembalian"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Penerimaan Amplop</span></a>
+              </li>
+
+              <!-- 
               <li <?php if($menu == 'grafik-harian'){ echo 'class="active"'; } ?>>
                 <a href="<?= base_url()?>grafik/harian"  class="nav-link"><i class="fas fa-chart-bar"></i><span>Rekapitulasi Perhitungan Harian Amplop</span></a>
               </li> -->

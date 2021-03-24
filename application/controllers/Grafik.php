@@ -10,6 +10,7 @@ class grafik extends CI_Controller {
 		$this->load->model('lingkungan_m');
 		$this->load->model('umat_m');
 		$this->load->model('rekaplingkungan_m');
+		$this->load->model('kembaliamplop_m');
 		$this->load->model('user_m');
 
     }
@@ -120,6 +121,58 @@ class grafik extends CI_Controller {
 		} else {
 			$data['wilayah'] = $this->lingkungan_m->get_lingkungan($data['wil'])[0];
 			$this->load->view('pdf/grafik_jumlah_v', $data);
+		}
+   	}
+
+   	public function pengembalian($cetak=""){
+   		$data=array();
+		$data['menu']='grafik-kembali';
+		$data['user_now'] =  $this->session->userdata('amplop_session');
+		$data['title'] = 'Grafik Penerimaan Amplop';
+		$data['opt'] = $this->input->get('option');
+   		$data['wil'] = $this->input->get('wilayah');
+		$data['wilayah'] = $this->lingkungan_m->get_wilayah();
+		$data['data'] = $this->kembaliamplop_m->jumlah_pengembalian_amplop($data['wil']);
+		
+		////
+		$params = $_GET;
+		unset($params['alert']);
+		$data['params'] = http_build_query($params);
+		$last_params = array(
+			'params' => $data['params'],
+			'menu' => $data['menu']
+		);
+		$this->session->set_userdata('lastparams',$last_params);
+		/////
+		$data['list'] = array();
+		$data['item'] = array();
+		$max = 20;
+		$item = 
+		$maxitem = ceil( count($data['data']) / ceil(count($data['data']) / 20) );
+		$i=0;$n=0;$max=0;
+		foreach ($data['data'] as $d) {
+			if($n == $maxitem){
+				$i++;
+				$n=0;
+			}
+			$data['list'][$i][] = '['.$d->kode_lingkungan.'] '.$d->lingkungan;	 
+			$data['item_terhitung'][$i][] = $d->jumlah_pengembalian;
+			$data['item_belum_terhitung'][$i][] = $d->jumlah_amplop - $d->jumlah_pengembalian;
+			if($max<$d->jumlah_pengembalian) $max = $d->jumlah_pengembalian;
+			if($max<($d->jumlah_amplop - $d->jumlah_pengembalian) ) $max = $d->jumlah_amplop - $d->jumlah_pengembalian;	 
+
+			$n++;
+		} 
+		$data['max'] = $this->round($max,100); 
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+		// exit();
+		if(!$cetak){
+			$this->load->view('grafik_kembali_v', $data);
+		} else {
+			$data['wilayah'] = $this->lingkungan_m->get_lingkungan($data['wil'])[0];
+			$this->load->view('pdf/grafik_kembali_v', $data);
 		}
    	}
 

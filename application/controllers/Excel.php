@@ -11,6 +11,7 @@ class excel extends CI_Controller {
 		$this->load->model('lingkungan_m');
 		$this->load->model('umat_m');
 		$this->load->model('rekaplingkungan_m');
+		$this->load->model('kembaliamplop_m');
 		$this->load->model('user_m');
 		$this->style_col = array(
 		  //'font' => array('bold' => true), // Set font nya jadi bold
@@ -374,7 +375,7 @@ class excel extends CI_Controller {
    		$data=array();
 		$data['menu']='grafik-perhitungan';
 		$data['user_now'] =  $this->session->userdata('amplop_session');
-		$data['title'] = 'Grafik Perhitungan Amplop';
+		$data['title'] = 'Rekap Perhitungan Amplop';
 		$data['opt'] = $this->input->get('option');
    		$data['wil'] = $this->input->get('wilayah');
 		$data['wilayah'] = $this->lingkungan_m->get_wilayah();
@@ -493,7 +494,7 @@ class excel extends CI_Controller {
    		$data=array();
 		$data['menu']='grafik-jumlah';
 		$data['user_now'] =  $this->session->userdata('amplop_session');
-		$data['title'] = 'Grafik Jumlah Amplop';
+		$data['title'] = 'Rekap Jumlah Amplop';
 		$data['opt'] = $this->input->get('option');
    		$data['wil'] = $this->input->get('wilayah');
 		$data['wilayah'] = $this->lingkungan_m->get_wilayah();
@@ -503,6 +504,111 @@ class excel extends CI_Controller {
 			$data['data'] = $this->rekaplingkungan_m->jumlah_rekap_lingkungan($data['wil']);
 		}
 		$this->rekap_jumlah_perhitungan($data['data']);
+   	}
+
+   	function rekap_pengembalian_amplop($rekap){
+    	$excel = new PHPExcel();
+    	$title = "Laporan Rekapitulasi Penerimaan Amplop APP - per tanggal ".(date("d-m-Y"));
+    	$excel = $this->excelTitle($excel,'RAMP',$title,"Laporan Rekapitulasi","Data Rekapitulasi");
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Laporan Rekapitulasi Penerimaan Amplop APP"); 
+		$excel->getActiveSheet()->mergeCells('A1:F1'); 
+		// $excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(12); 
+		$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+		$excel->getActiveSheet()->setCellValue('A2'," Data per Tanggal ".(date("d-m-Y"))); 
+		$excel->getActiveSheet()->mergeCells('A2:F2'); 
+		// $excel->getActiveSheet()->getStyle('A2')->getFont()->setBold(TRUE); 
+		$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(12); 
+		$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER); 
+
+		$coltitle = 4;
+		$excel->getActiveSheet()->setCellValue('A'.$coltitle, "No"); 
+		$excel->getActiveSheet()->setCellValue('B'.$coltitle, "Wilayah");
+		$excel->getActiveSheet()->setCellValue('C'.$coltitle, "Lingkungan"); 
+		$excel->getActiveSheet()->setCellValue('D'.$coltitle, "Jumlah Amplop Dibagikan"); 
+		$excel->getActiveSheet()->setCellValue('E'.$coltitle, "Jumlah Amplop Diterima"); 
+		$excel->getActiveSheet()->setCellValue('F'.$coltitle, "Persentase");
+
+		$excel->getActiveSheet()->getStyle('A'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$coltitle)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$coltitle)->applyFromArray($this->style_col);
+
+		$numrow = 5;
+		$no=1;	
+		$jumlah_bagi = 0;
+		$jumlah_kembali = 0;
+		foreach ($rekap as $d) {
+			$persentase =  $d->jumlah_pengembalian / $d->jumlah_amplop ; 
+			$excel->getActiveSheet()->setCellValue('A'.$numrow, $no);
+			$excel->getActiveSheet()->setCellValue('B'.$numrow, $d->wilayah );
+			$excel->getActiveSheet()->setCellValue('C'.$numrow, $d->lingkungan);
+			$excel->getActiveSheet()->setCellValue('D'.$numrow, $d->jumlah_amplop);
+			$excel->getActiveSheet()->setCellValue('E'.$numrow, $d->jumlah_pengembalian);
+			$excel->getActiveSheet()->setCellValue('F'.$numrow, $persentase);
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_row);
+			$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_row);
+			$no++; // Tambah 1 setiap kali looping
+			$numrow++;
+			$jumlah_bagi+=$d->jumlah_amplop;
+			$jumlah_kembali+=$d->jumlah_pengembalian;
+		}
+		$persentase =  $jumlah_kembali / $jumlah_bagi; 
+		$excel->getActiveSheet()->setCellValue('A'.$numrow, 'Total');
+		$excel->getActiveSheet()->mergeCells('A'.$numrow.':'.'C'.$numrow); 
+		$excel->getActiveSheet()->setCellValue('D'.$numrow, $jumlah_bagi);
+		$excel->getActiveSheet()->setCellValue('E'.$numrow, $jumlah_kembali);
+		$excel->getActiveSheet()->setCellValue('F'.$numrow, $persentase);
+
+		$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($this->style_col);
+		$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($this->style_col);
+
+		$excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$excel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+		$excel = $this->setformat($excel,'D4:E'.$numrow);
+		$excel = $this->setformat($excel,'F4:F'.$numrow,'0.00%');
+
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		$excel->getActiveSheet(0)->setTitle("Rekapitulasi");
+    	
+		$excel->setActiveSheetIndex(0);
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'.$title.'.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		if(ob_get_length() > 0) {
+		    ob_clean();
+		}
+		$write->save('php://output');
+		exit();	
+    }
+
+   	public function pengembalian($cetak=""){
+   		$data=array();
+		$data['menu']='grafik-kembali';
+		$data['user_now'] =  $this->session->userdata('amplop_session');
+		$data['title'] = 'Rekap Pengembalian Amplop';
+		$data['opt'] = $this->input->get('option');
+   		$data['wil'] = $this->input->get('wilayah');
+		$data['wilayah'] = $this->lingkungan_m->get_wilayah();
+		$data['data'] = $this->kembaliamplop_m->jumlah_pengembalian_amplop($data['wil']);
+		$this->rekap_pengembalian_amplop($data['data']);
    	}
 
    	function import(){
