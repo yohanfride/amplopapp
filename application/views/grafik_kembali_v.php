@@ -23,6 +23,15 @@
                         <div class="row">
                             <div class="col-xl-4 col-md-6 col-sm-12">
                                 <div class="form-group">
+                                    <label>Jenis Data</label>
+                                    <select  id="input-option" class="form-control select2" name="option" required>
+                                        <option value="user" selected >Jumlah Amplop</option>
+                                        <option value="umat" <?= ($opt == 'umat')?'selected':''; ?>>Jumlah Umat (Amplop per KK Lengkap )</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 col-sm-12">
+                                <div class="form-group">
                                     <label>Wilayah</label>
                                     <select  id="input-wilayah" class="form-control select2" name="wilayah" >
                                         <option  value="" selected> SEMUA </option>

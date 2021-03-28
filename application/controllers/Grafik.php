@@ -146,7 +146,7 @@ class grafik extends CI_Controller {
 		/////
 		$data['list'] = array();
 		$data['item'] = array();
-		$max = 20;
+		$max = 0;
 		$item = 
 		$maxitem = ceil( count($data['data']) / ceil(count($data['data']) / 20) );
 		$i=0;$n=0;$max=0;
@@ -156,14 +156,24 @@ class grafik extends CI_Controller {
 				$n=0;
 			}
 			$data['list'][$i][] = '['.$d->kode_lingkungan.'] '.$d->lingkungan;	 
-			$data['item_terhitung'][$i][] = $d->jumlah_pengembalian;
-			$data['item_belum_terhitung'][$i][] = $d->jumlah_amplop - $d->jumlah_pengembalian;
-			if($max<$d->jumlah_pengembalian) $max = $d->jumlah_pengembalian;
-			if($max<($d->jumlah_amplop - $d->jumlah_pengembalian) ) $max = $d->jumlah_amplop - $d->jumlah_pengembalian;	 
-
+			if($data['opt']=='umat'){
+				$data['item_terhitung'][$i][] = ceil($d->jumlah_pengembalian / 7);
+				$data['item_belum_terhitung'][$i][] = ceil($d->jumlah_amplop / 7) - ceil($d->jumlah_pengembalian / 7);
+				if($max<ceil($d->jumlah_pengembalian / 7)) $max = ceil($d->jumlah_pengembalian / 7);
+				if($max<( ceil($d->jumlah_amplop / 7) - ceil($d->jumlah_pengembalian / 7) ) ) $max =  ceil($d->jumlah_amplop / 7) - ceil($d->jumlah_pengembalian / 7);
+			} else {
+				$data['item_terhitung'][$i][] = $d->jumlah_pengembalian;
+				$data['item_belum_terhitung'][$i][] = $d->jumlah_amplop - $d->jumlah_pengembalian;	
+				if($max<$d->jumlah_pengembalian) $max = $d->jumlah_pengembalian ;
+				if($max<($d->jumlah_amplop - $d->jumlah_pengembalian ) ) $max =  $d->jumlah_amplop - $d->jumlah_pengembalian;	
+			}
 			$n++;
 		} 
-		$data['max'] = $this->round($max,100); 
+		if($data['opt']=='umat'){
+			$data['max'] = $this->round($max,10); 
+		} else {
+			$data['max'] = $this->round($max,100); 
+		}
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";

@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="align-items-center">
                         <h3 class="card-title text-center">
-                            Grafik Rekapitulasi Penerimaan Amplop
+                            Grafik Rekapitulasi Penerimaan Amplop - <?= ($opt == 'umat')?'[Berdasarkan Jumlah Umat]':'Berdasrkan Jumlah Amplop'; ?>
                             <?php if($wil){ ?>
                               <span class="text-primary"> Wilayah <?= $wilayah->wilayah; ?> [<?= $wilayah->kode_wilayah; ?>]  </span> 
                             <?php } ?>
