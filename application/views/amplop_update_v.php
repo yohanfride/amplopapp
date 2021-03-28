@@ -172,6 +172,7 @@
 </div>
 
 <script type="text/javascript">
+    var curr_kk_id = "";
     Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
       var n = this,
           decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
@@ -249,6 +250,11 @@
             var kk_id = $("#kk_id").val();
             var amplop = $("#amplop").val();
             if( kk_id != '' && amplop != '' ){
+                if(kk_id!=curr_kk_id){
+                    $(".input-pecahan").val("0");
+                    curr_kk_id = kk_id;
+                    hitung();
+                }
                 $.ajax({
                     url: '<?= base_url(); ?>api/umat/detail_amplop/',
                     data: {'kk_id':kk_id,'amplop':amplop},
@@ -296,7 +302,7 @@
                             $(".frm-input-hide").css('display','none');
                         }
                     }
-                });
+                });                
             } else {
                 swal('KK ID dan Amplop Tidak Lengkap','Silahkan isi KK ID dan Nomor Amplop terlebih dahulu','warning',{
                     timer:2000
