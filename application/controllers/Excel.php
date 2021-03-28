@@ -648,6 +648,8 @@ class excel extends CI_Controller {
 				}
 				echo " -> Berhasil: ".$berhasil." - Gagal: ".$gagal;
 				echo "<br/>";
+			} else {
+				echo "$lingkungan - Gagal<br/>";
 			}	
 		}
    	}
