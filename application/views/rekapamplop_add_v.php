@@ -136,6 +136,10 @@
                               <input type="file" class="form-control" name="foto" required>
                             </div>
                             <div class="form-group col-md-6">
+                              <label>Catatan</label>
+                              <textarea  class="form-control" name="catatan" style="min-height: 100px;"></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label>Status Simpan Data</label>
                                 <div class="form-group">
                                     <label class="custom-switch pl-1 mr-5">
@@ -149,7 +153,6 @@
                                         <span class="custom-switch-description">Draft Data</span>
                                     </label> 
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="form-actions frm-input-hide">

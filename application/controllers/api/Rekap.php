@@ -233,6 +233,7 @@ class Rekap extends REST_Controller {
 		$nama =  $this->input->post('nama'); 
 		$user_id = $this->input->post('user_id');
 		$tanggal = $this->input->post('tanggal');
+		$catatan = $this->input->post('catatan');
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
 		$this->form_validation->set_rules('penghitung', 'Penghitung', 'required');
@@ -245,7 +246,8 @@ class Rekap extends REST_Controller {
 			];
 		} else {
 			$input=array(
-				'penghitung' => $penghitung,		
+				'penghitung' => $penghitung,
+				'catatan' => $catatan,		
 				'status_simpan' => $status_simpan,			
 				'date_add' => $tanggal,			
 				'nama_rekap' => $nama,			

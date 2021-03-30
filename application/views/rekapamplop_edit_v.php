@@ -163,7 +163,11 @@
                                 <div class="form-group">
                                   <label>Update Foto Fisik Amplop Coklat</label>
                                   <input type="file" class="form-control" name="foto" >
-                                </div>                       
+                                </div>     
+                                <div class="form-group ">
+                                  <label>Catatan</label>
+                                  <textarea  class="form-control" style="min-height: 100px;" name="catatan"><?= $data->catatan; ?></textarea>
+                                </div>                  
                                 <div class="form-group">
                                     <label>Status Simpan Data</label>
                                     <div class="form-group">
