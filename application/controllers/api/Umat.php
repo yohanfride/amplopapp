@@ -235,7 +235,8 @@ class Umat extends REST_Controller {
 					'nominal' =>  $umat->{'amplop'.$amplop},
 					'status_amplop' => $umat->{'status_amplop'.$amplop},
 					'user_id' => $umat->{'user_id'.$amplop},
-					'pecahan' => $pecahan
+					'pecahan' => $pecahan,
+					'totalamplop' => $umat->totalamplop
 				);
 				$message = array(					
 					'status' => 'true',

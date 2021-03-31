@@ -90,6 +90,7 @@
                                             <span class="text-success" id="list-nama">xx</span>
                                             <div class="text-small fw-bold"><span style="width: 100px;">LINGKUNGAN :</span><span class="ml-1" id="list-lingkungan">xxx</span> </div>
                                             <div class="text-small fw-bold"><span style="width: 100px;">WILAYAH :</span> <span class="ml-1" id="list-wilayah">xxx</span> </div>
+                                            <div class="text-primary fw-bold"><span style="width: 100px; margin-top: 20px;">TOTAL KESELURUHAN KK :</span> Rp. <span class="ml-1" id="list-totalamplop">xxx</span> </div>
                                         </div>                                        
                                       </div>
                                     </li>
@@ -275,6 +276,7 @@
                             $("#list-lingkungan").html(data.lingkungan);
                             $("#list-amplop").html('AMPLOP '+data.amplop);
                             $("#list-nominal").html(parseInt(data.nominal).formatMoney(0,'.',','));
+                            $("#list-totalamplop").html(parseInt(data.totalamplop).formatMoney(0,'.',','));                            
                             var status = data.status_amplop;
                             if(status == 0){
                                 $("#input-tipe").val('tambah');

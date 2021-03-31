@@ -61,7 +61,7 @@ class umat_m extends My_Model{
 	}
 
 	function get_detail($kk_id){
-		$sql = "SELECT * FROM amplop_umat a join lingkungan b on a.kode_lingkungan = b.kode_lingkungan
+		$sql = "SELECT *, (amplop1 + amplop2 + amplop3 + amplop4 + amplop5 + amplop6 + amplop7) as totalamplop FROM amplop_umat a join lingkungan b on a.kode_lingkungan = b.kode_lingkungan
 				WHERE kk_id = '$kk_id' ";
 		$q   = $this->db->query($sql);
 		$data = $q->row();

@@ -20,8 +20,10 @@ class dashboard extends CI_Controller {
 		$data['chart']=true;
 		$data['user_now'] =  $this->session->userdata('amplop_session');
 		$data['title'] ='Dashboard Page';
-		$data['jumlah_amplop'] = $this->umat_m->count_data_all('');
+		$data['jumlah_kk'] = $this->umat_m->count_data_all('');
+		$data['jumlah_amplop'] = $data['jumlah_kk'] * 7;
 		$data['jumlah_amplop_terhitung'] = $this->umat_m->jumlah_rekap_terhitung()->jumlah_amplop;
+		$data['jumlah_kk_terhitung'] = ceil($data['jumlah_amplop_terhitung'] / 7);
 		$data['data'] = $this->rekapamplop_m->rekap_per_tanggal(18);
 		foreach ($data['data'] as $d) {
 			$data['label'][] = date_format(date_create($d->date_add), 'd/m/Y');	 

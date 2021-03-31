@@ -162,6 +162,38 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-lg-4 ">
+				<div class="col-lg-12">
+					<div class="card card-statistic-1">
+						<div class="card-icon bg-primary">
+							<i class="far fa-user"></i>
+						</div>
+						<div class="card-wrap">
+							<div class="card-header">
+								<h4 class="text-success">Jumlah KK (Menerima Amplop)</h4>
+							</div>
+							<div class="card-body">
+								<?= number_format($jumlah_kk,0,',','.');  ?>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="card card-statistic-1">
+						<div class="card-icon bg-success">
+							<i class="far fa-user"></i>
+						</div>
+						<div class="card-wrap">
+							<div class="card-header">
+								<h4 class="text-danger">Jumlah KK (Telah Dihitung)</h4>
+							</div>
+							<div class="card-body">
+								<?= number_format($jumlah_kk_terhitung,0,',','.');  ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 <?php include("footer.php") ?>
 <script src="<?= base_url()?>assets/node_modules/chart.js/dist/Chart.min.js"></script>
