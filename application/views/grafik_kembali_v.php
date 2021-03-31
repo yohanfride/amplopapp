@@ -61,7 +61,7 @@
                             <i class="fa fa-file-pdf"></i>
                             Cetak PDF
                           </button></a>
-                          <a target="_blank" href="<?= base_url()?>/excel/pengembalian/<?= $params; ?>" ><button class="btn btn-lg btn-success btn-round ml-auto">
+                          <a target="_blank" href="<?= base_url()?>/excel/pengembalian/?<?= $params; ?>" ><button class="btn btn-lg btn-success btn-round ml-auto">
                             <i class="fa fa-file-excel"></i>
                             Export Excel
                           </button></a>
