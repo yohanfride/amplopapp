@@ -129,7 +129,7 @@
                                 <?php $no=$offset+1; foreach ($data as $d) { ?>
                                 <tr>
                                     <td class="text-nowrap"><?= $no++; ?></td>
-                                    <td class="text-nowrap"><?= date_format(date_create($d->date_add), 'd/m/Y'); ?></td>
+                                    <td class="text-nowrap"><?= date_format(date_create($d->tanggal_pengembalian), 'd/m/Y'); ?></td>
                                     <td class="text-nowrap"><?= $d->wilayah ?></td>
                                     <td class="text-nowrap"><?= $d->lingkungan ?> [<?= $d->kode_lingkungan ?>] </td>
                                     <td class="text-nowrap"><?= number_format($d->jumlah_amplop,0,',','.');  ?></td>
