@@ -46,7 +46,7 @@
 
 <script type="text/javascript">
     
-    function chartjs_init(id, labels,data1,data2){
+    function chartjs_init(id, labels,data1,data2,data3){
         var ctx = document.getElementById(id).getContext('2d');
         var myChart = new Chart(ctx, {
           type: 'bar',
@@ -62,8 +62,17 @@
               pointBackgroundColor: '#ffffff',
               pointRadius: 4
             },{
-              label: ['Amplop Belum Terhitung'],
+              label: ['Amplop Telah Kembali'],
               data: data2,
+              borderWidth: 2,
+              backgroundColor: '#47c363',
+              borderColor: '#47c363',
+              borderWidth: 2.5,
+              pointBackgroundColor: '#ffffff',
+              pointRadius: 4
+            },{
+              label: ['Amplop Keseluruhan'],
+              data: data3,
               borderWidth: 2,
               backgroundColor: '#fc544b',
               borderColor: '#fc544b',
@@ -133,7 +142,7 @@
 
     $(document).ready(function() {
         <?php for($i=0; $i<count($list); $i++ ){ ?>
-            chartjs_init("myChart<?= $i?>",["<?= implode('","', $list[$i]) ?>"],[<?= implode(',', $item_terhitung[$i]) ?>],[<?= implode(',', $item_belum_terhitung[$i]) ?>]);
+            chartjs_init("myChart<?= $i?>",["<?= implode('","', $list[$i]) ?>"],[<?= implode(',', $item_terhitung[$i]) ?>],[<?= implode(',', $item_kembali[$i]) ?>],[<?= implode(',', $item_belum_terhitung[$i]) ?>]);
         <?php } ?>
         setTimeout(function(){ 
           window.print(); 

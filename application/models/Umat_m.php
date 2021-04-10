@@ -154,12 +154,15 @@ class umat_m extends My_Model{
 
 	function jumlah_rekap_lingkungan($wil=""){
 		$sql = "SELECT a.*, (SELECT COUNT(kk_id) * 7 FROM amplop_umat c WHERE c.kode_lingkungan = a.kode_lingkungan ) as jumlah_amplop,
-				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung FROM lingkungan a left join 
+				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung, IFNULL(d.jumlah_amplop, 0) AS jumlah_kembali FROM lingkungan a left join 
 				( SELECT kode_lingkungan,timestamp1, SUM(amplop1 + amplop2 + amplop3 + amplop4 + amplop5 + amplop6 + amplop7) AS jumlah_amplop FROM 
 					( SELECT kode_lingkungan, timestamp1, IF(status_amplop1 = 7,1,0) AS amplop1, IF(status_amplop2 = 7,1,0) AS amplop2,
 					IF(status_amplop3 = 7,1,0) AS amplop3, IF(status_amplop4 = 7,1,0) AS amplop4,  IF(status_amplop5 = 7,1,0) AS amplop5,
 					IF(status_amplop6 = 7,1,0) AS amplop6, IF(status_amplop7 = 7,1,0) AS amplop7 FROM amplop_umat ) a 
-				GROUP BY kode_lingkungan) b on a.kode_lingkungan = b.kode_lingkungan ";
+				GROUP BY kode_lingkungan) b on a.kode_lingkungan = b.kode_lingkungan 
+				left join ( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop FROM pengembalian_amplop GROUP BY kode_lingkungan ) 
+				d on a.kode_lingkungan = d.kode_lingkungan
+				";
 		
 		if(!empty($wil)){
 			$sql.=" WHERE (kode_wilayah = '$wil' OR wilayah LIKE '%$wil%') ";

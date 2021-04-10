@@ -120,6 +120,7 @@
                                     <th>Tanggal</th>
                                     <th>Wilayah</th>
                                     <th>Lingkungan</th>
+                                    <th>Jumlah KK</th>
                                     <th>Jumlah Amplop</th>
                                     <th>Penerima</th>
                                     <th class="text-nowrap">Aksi</th>
@@ -132,6 +133,7 @@
                                     <td class="text-nowrap"><?= date_format(date_create($d->tanggal_pengembalian), 'd/m/Y'); ?></td>
                                     <td class="text-nowrap"><?= $d->wilayah ?></td>
                                     <td class="text-nowrap"><?= $d->lingkungan ?> [<?= $d->kode_lingkungan ?>] </td>
+                                    <td class="text-nowrap"><?= number_format(ceil($d->jumlah_amplop / 7),0,',','.');  ?></td>
                                     <td class="text-nowrap"><?= number_format($d->jumlah_amplop,0,',','.');  ?></td>
                                     <td class="text-nowrap"><?= $d->penerima ?></td>
                                     <td>

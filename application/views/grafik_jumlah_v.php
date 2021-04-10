@@ -30,6 +30,13 @@
                                         <option value="umat" <?= ($opt == 'umat')?'selected':''; ?>>Data Perhitungan Amplop per Umat</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Tampilan Data</label>
+                                    <select  id="input-option" class="form-control select2" name="option2" required>
+                                        <option value="user" selected >Jumlah Amplop</option>
+                                        <option value="umat" <?= ($opt2 == 'umat')?'selected':''; ?>>Jumlah Umat </option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-xl-4 col-md-6 col-sm-12">
                                 <div class="form-group">
@@ -92,7 +99,7 @@
 
 <script type="text/javascript">
     
-    function chartjs_init(id, labels,data1,data2){
+    function chartjs_init(id, labels,data1,data2,data3){
         var ctx = document.getElementById(id).getContext('2d');
         var myChart = new Chart(ctx, {
           type: 'bar',
@@ -108,8 +115,17 @@
               pointBackgroundColor: '#ffffff',
               pointRadius: 4
             },{
-              label: ['Amplop Belum Terhitung'],
+              label: ['Amplop Telah Kembali'],
               data: data2,
+              borderWidth: 2,
+              backgroundColor: '#47c363',
+              borderColor: '#47c363',
+              borderWidth: 2.5,
+              pointBackgroundColor: '#ffffff',
+              pointRadius: 4
+            },{
+              label: ['Amplop Keseluruhan'],
+              data: data3,
               borderWidth: 2,
               backgroundColor: '#fc544b',
               borderColor: '#fc544b',
@@ -156,7 +172,7 @@
 
     $(document).ready(function() {
         <?php for($i=0; $i<count($list); $i++ ){ ?>
-            chartjs_init("myChart<?= $i?>",["<?= implode('","', $list[$i]) ?>"],[<?= implode(',', $item_terhitung[$i]) ?>],[<?= implode(',', $item_belum_terhitung[$i]) ?>]);
+            chartjs_init("myChart<?= $i?>",["<?= implode('","', $list[$i]) ?>"],[<?= implode(',', $item_terhitung[$i]) ?>],[<?= implode(',', $item_kembali[$i]) ?>],[<?= implode(',', $item_belum_terhitung[$i]) ?>]);
         <?php } ?>
 
     } );

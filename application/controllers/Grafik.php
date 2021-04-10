@@ -74,6 +74,7 @@ class grafik extends CI_Controller {
 		$data['user_now'] =  $this->session->userdata('amplop_session');
 		$data['title'] = 'Grafik Jumlah Amplop';
 		$data['opt'] = $this->input->get('option');
+		$data['opt2'] = $this->input->get('option2');
    		$data['wil'] = $this->input->get('wilayah');
 		$data['wilayah'] = $this->lingkungan_m->get_wilayah();
 		if($data['opt']=='umat'){
@@ -81,6 +82,7 @@ class grafik extends CI_Controller {
 		} else {
 			$data['data'] = $this->rekaplingkungan_m->jumlah_rekap_lingkungan($data['wil']);
 		}
+
 		
 		////
 		$params = $_GET;
@@ -96,26 +98,40 @@ class grafik extends CI_Controller {
 		$data['item'] = array();
 		$max = 20;
 		$item = 
-		$maxitem = ceil( count($data['data']) / ceil(count($data['data']) / 20) );
+		$maxitem = ceil( count($data['data']) / ceil(count($data['data']) / 15) );
 		$i=0;$n=0;$max=0;
 		foreach ($data['data'] as $d) {
 			if($n == $maxitem){
 				$i++;
 				$n=0;
 			}
-			$data['list'][$i][] = '['.$d->kode_lingkungan.'] '.$d->lingkungan;	 
-			$data['item_terhitung'][$i][] = $d->jumlah_terhitung;
-			$data['item_belum_terhitung'][$i][] = $d->jumlah_amplop - $d->jumlah_terhitung;
-			if($max<$d->jumlah_terhitung) $max = $d->jumlah_terhitung;
-			if($max<($d->jumlah_amplop - $d->jumlah_terhitung) ) $max = $d->jumlah_amplop - $d->jumlah_terhitung;	 
+			if($data['opt2']=='umat'){
+				$data['list'][$i][] = '['.$d->kode_lingkungan.'] '.$d->lingkungan;	 
+				$data['item_terhitung'][$i][] = ceil($d->jumlah_terhitung / 7);
+				$data['item_belum_terhitung'][$i][] = ceil($d->jumlah_amplop / 7);
+				$data['item_kembali'][$i][] = ceil($d->jumlah_kembali / 7);
+				if($max<ceil($d->jumlah_amplop / 7) ) $max = ceil($d->jumlah_amplop / 7);
+			}else{
+				$data['list'][$i][] = '['.$d->kode_lingkungan.'] '.$d->lingkungan;	 
+				$data['item_terhitung'][$i][] = $d->jumlah_terhitung;
+				$data['item_belum_terhitung'][$i][] = $d->jumlah_amplop;
+				$data['item_kembali'][$i][] = $d->jumlah_kembali;
+				if($max<$d->jumlah_amplop) $max = $d->jumlah_amplop;	
+			}
+				 
 
 			$n++;
 		} 
-		$data['max'] = $this->round($max,100); 
+		if($data['opt2']=='umat'){
+			$data['max'] = $this->round($max,10); 
+		} else {
+			$data['max'] = $this->round($max,100); 
+		} 
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
 		// exit();
+
 		if(!$cetak){
 			$this->load->view('grafik_jumlah_v', $data);
 		} else {

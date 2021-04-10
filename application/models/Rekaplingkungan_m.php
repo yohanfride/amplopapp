@@ -110,8 +110,11 @@ class rekaplingkungan_m extends My_Model{
 
 	function jumlah_rekap_lingkungan($wil=""){
 		$sql = "SELECT a.*, (SELECT COUNT(kk_id) * 7 FROM amplop_umat c WHERE c.kode_lingkungan = a.kode_lingkungan ) as jumlah_amplop,
-				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung FROM lingkungan a left join 
-				( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan ";
+				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung, IFNULL(d.jumlah_amplop, 0) AS jumlah_kembali  FROM lingkungan a left join 
+				( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan  
+				left join ( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop FROM pengembalian_amplop GROUP BY kode_lingkungan ) d 
+				on a.kode_lingkungan = d.kode_lingkungan
+				";
 		if(!empty($wil)){
 			$sql.=" WHERE (kode_wilayah = '$wil' OR wilayah LIKE '%$wil%') ";
 		}		
@@ -143,7 +146,7 @@ class rekaplingkungan_m extends My_Model{
 		$sql = "SELECT a.*, (SELECT COUNT(kk_id) * 7 FROM amplop_umat c WHERE c.kode_lingkungan = a.kode_lingkungan ) as jumlah_amplop,
 				IFNULL(b.jumlah_amplop, 0) AS jumlah_terhitung, IFNULL(b.total, 0) AS total FROM lingkungan a left join 
 				( SELECT kode_lingkungan, sum(jumlah_amplop) as jumlah_amplop, sum(total) as total  
-				FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan ";
+				FROM rekap_lingkungan GROUP BY kode_lingkungan ) b on a.kode_lingkungan = b.kode_lingkungan";
 		$sql.= " ORDER BY $orderby";
 		if(!empty($lim)){
 			$sql.= " LIMIT 0, $lim";
